@@ -651,8 +651,11 @@ function App() {
       <About />
       <Portfolio />
       <Testimonials />
+      <FAQ />
       <ContactForm />
       <Footer />
+      <ScrollToTop />
+      <WhatsAppFloat />
     </div>
   );
 }
