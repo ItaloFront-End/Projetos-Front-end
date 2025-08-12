@@ -497,6 +497,7 @@ function App() {
 
   return (
     <div className="App">
+      <ParticleBackground />
       <Header />
       <Hero />
       <Services />
