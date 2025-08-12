@@ -502,6 +502,7 @@ function App() {
       <Header />
       <Hero />
       <Services />
+      <Features />
       <About />
       <Portfolio />
       <Testimonials />
