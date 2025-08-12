@@ -35,10 +35,25 @@ class StatusCheck(BaseModel):
 class StatusCheckCreate(BaseModel):
     client_name: str
 
+# Contact form models
+class ContactMessage(BaseModel):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    name: str
+    email: str
+    phone: str = ""
+    message: str
+    timestamp: datetime = Field(default_factory=datetime.utcnow)
+
+class ContactMessageCreate(BaseModel):
+    name: str
+    email: str
+    phone: str = ""
+    message: str
+
 # Add your routes to the router instead of directly to app
 @api_router.get("/")
 async def root():
-    return {"message": "Hello World"}
+    return {"message": "Hello World - ItaloDev API"}
 
 @api_router.post("/status", response_model=StatusCheck)
 async def create_status_check(input: StatusCheckCreate):
@@ -51,6 +66,25 @@ async def create_status_check(input: StatusCheckCreate):
 async def get_status_checks():
     status_checks = await db.status_checks.find().to_list(1000)
     return [StatusCheck(**status_check) for status_check in status_checks]
+
+@api_router.post("/contact", response_model=ContactMessage)
+async def create_contact_message(input: ContactMessageCreate):
+    """Endpoint para receber mensagens do formulário de contato"""
+    contact_dict = input.dict()
+    contact_obj = ContactMessage(**contact_dict)
+    
+    # Salva no MongoDB
+    await db.contact_messages.insert_one(contact_obj.dict())
+    
+    logger.info(f"Nova mensagem de contato recebida de {contact_obj.name} ({contact_obj.email})")
+    
+    return contact_obj
+
+@api_router.get("/contact", response_model=List[ContactMessage])
+async def get_contact_messages():
+    """Endpoint para listar todas as mensagens de contato (admin)"""
+    messages = await db.contact_messages.find().sort("timestamp", -1).to_list(1000)
+    return [ContactMessage(**message) for message in messages]
 
 # Include the router in the main app
 app.include_router(api_router)
