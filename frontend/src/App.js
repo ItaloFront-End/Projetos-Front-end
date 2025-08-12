@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import axios from 'axios';
+import FAQ from './components/FAQ';
+import ScrollToTop from './components/ScrollToTop';
+import WhatsAppFloat from './components/WhatsAppFloat';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
