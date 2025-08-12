@@ -6,6 +6,7 @@ import ScrollToTop from './components/ScrollToTop';
 import WhatsAppFloat from './components/WhatsAppFloat';
 import ParticleBackground from './components/ParticleBackground';
 import ContactForm from './components/ContactForm';
+import Features from './components/Features';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
